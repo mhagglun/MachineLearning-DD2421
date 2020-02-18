@@ -3,17 +3,11 @@
 
 import numpy as np
 from scipy import misc
-from imp import reload
+from importlib import reload
 from bayesfuns import *
 import random
 
 
-# ## Bayes classifier functions to implement
-# 
-# The lab descriptions state what each function should do.
-
-
-# NOTE: you do not need to handle the W argument for this part!
 # in: labels - N vector of class labels
 # out: prior - C x 1 vector of class priors
 def computePrior(labels, W=None):
@@ -25,23 +19,20 @@ def computePrior(labels, W=None):
     classes = np.unique(labels)
     Nclasses = np.size(classes)
 
-    prior = np.zeros((Nclasses,1))
+    prior = np.array([ len(labels[labels==k])/Npts for k in classes])
 
-    # TODO: compute the values of prior for each class!
-    # ==========================
-    
-    # ==========================
+    return prior # The prior probability of a point belonging to class k
 
-    return prior
 
-# NOTE: you do not need to handle the W argument for this part!
-# in:      X - N x d matrix of N data points
-#     labels - N vector of class labels
-# out:    mu - C x d matrix of class means (mu[i] - class i mean)
-#      sigma - C x d x d matrix of class covariances (sigma[i] - class i sigma)
+# in:      X       - N x d matrix of N data points
+#        labels    - N vector of class labels
+#
+# out:    mu       - C x d matrix of class means (mu[i] - class i mean)
+#       sigma      - C x d x d matrix of class covariances (sigma[i] - class i sigma)
+#
 def mlParams(X, labels, W=None):
     assert(X.shape[0]==labels.shape[0])
-    Npts,Ndims = np.shape(X)
+    Npts, Ndims = np.shape(X)
     classes = np.unique(labels)
     Nclasses = np.size(classes)
 
@@ -51,10 +42,11 @@ def mlParams(X, labels, W=None):
     mu = np.zeros((Nclasses,Ndims))
     sigma = np.zeros((Nclasses,Ndims,Ndims))
 
-    # TODO: fill in the code to compute mu and sigma!
-    # ==========================
-    
-    # ==========================
+    # TODO: compute mu and sigma
+    for k in classes:      
+        # sum the rows of X which correspond to class k, divide by the number of classes
+        mu[k,:] = np.sum( X[labels == k] ) / Nclasses 
+        sigma[k,:,:] = np.sum([np.outer(x-mu[k,:], x-mu[k,:])/Nclasses for x in X[labels == k]], 0)
 
     return mu, sigma
 
@@ -62,25 +54,30 @@ def mlParams(X, labels, W=None):
 #      prior - C x 1 matrix of class priors
 #         mu - C x d matrix of class means (mu[i] - class i mean)
 #      sigma - C x d x d matrix of class covariances (sigma[i] - class i sigma)
+#
 # out:     h - N vector of class predictions for test points
 def classifyBayes(X, prior, mu, sigma):
 
     Npts = X.shape[0]
-    Nclasses,Ndims = np.shape(mu)
+    Nclasses, Ndims = np.shape(mu)
     logProb = np.zeros((Nclasses, Npts))
-
-    # TODO: fill in the code to compute the log posterior logProb!
-    # ==========================
     
-    # ==========================
+
+    # TODO: Fix issue here since all points are classified as the same class
+
+    for k in range(Nclasses):
+        logProb[k,:] = [ discriminantFun(x, prior[k] , mu[k,:], sigma[k,:,:]) for x in X]
+         
     
     # one possible way of finding max a-posteriori once
     # you have computed the log posterior
     h = np.argmax(logProb,axis=0)
+    assert(h.shape[0] == Npts)
     return h
 
-
-# The implemented functions can now be summarized into the `BayesClassifier` class, which we will use later to test the classifier, no need to add anything else here:
+# TODO: Dont use inverse, fix later
+def discriminantFun(x, pk, mu, sigma):
+    return -0.5*( np.log(np.linalg.det(sigma) + np.dot( (x-mu), np.dot(np.linalg.inv(sigma), np.transpose(x))))) + np.log(pk)
 
 
 # NOTE: no need to touch this
@@ -104,23 +101,22 @@ class BayesClassifier(object):
 # Call `genBlobs` and `plotGaussian` to verify your estimates.
 
 
-X, labels = genBlobs(centers=5)
-mu, sigma = mlParams(X,labels)
-plotGaussian(X,labels,mu,sigma)
+# X, labels = genBlobs(centers=5)
+# mu, sigma = mlParams(X,labels)
+# plotGaussian(X,labels,mu,sigma)
 
 
 # Call the `testClassifier` and `plotBoundary` functions for this part.
 
 
-#testClassifier(BayesClassifier(), dataset='iris', split=0.7)
+testClassifier(BayesClassifier(), dataset='iris', split=0.7)
+
+plotBoundary(BayesClassifier(), dataset='iris',split=0.7)
 
 
 
-#testClassifier(BayesClassifier(), dataset='vowel', split=0.7)
+# testClassifier(BayesClassifier(), dataset='vowel', split=0.7)
 
-
-
-#plotBoundary(BayesClassifier(), dataset='iris',split=0.7)
 
 
 # ## Boosting functions to implement
@@ -210,11 +206,11 @@ class BoostClassifier(object):
 # Call the `testClassifier` and `plotBoundary` functions for this part.
 
 
-#testClassifier(BoostClassifier(BayesClassifier(), T=10), dataset='iris',split=0.7)
+# testClassifier(BoostClassifier(BayesClassifier(), T=10), dataset='iris',split=0.7)
 
 
 
-#testClassifier(BoostClassifier(BayesClassifier(), T=10), dataset='vowel',split=0.7)
+# testClassifier(BoostClassifier(BayesClassifier(), T=10), dataset='vowel',split=0.7)
 
 
 

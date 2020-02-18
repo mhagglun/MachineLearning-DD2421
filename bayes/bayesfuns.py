@@ -5,12 +5,14 @@ import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 from matplotlib.patches import Ellipse
 from matplotlib.colors import ColorConverter
+from matplotlib.axes._axes import _log as matplotlib_axes_logger
 import random as rnd
-from sklearn.datasets.samples_generator import make_blobs
+from sklearn.datasets import make_blobs
 from sklearn import decomposition, tree
 import seaborn as sns
 
 sns.set_style('darkgrid')
+matplotlib_axes_logger.setLevel('ERROR')
 
 def plot_cov_ellipse(cov, pos, nstd=2, ax=None, **kwargs):
     """
@@ -105,21 +107,21 @@ def trteSplitEven(X,y,pcSplit,seed=None):
 
 def fetchDataset(dataset='iris'):
     if dataset == 'iris':
-        X = genfromtxt('irisX.txt', delimiter=',')
-        y = genfromtxt('irisY.txt', delimiter=',',dtype=np.int)-1
+        X = genfromtxt('data/irisX.txt', delimiter=',')
+        y = genfromtxt('data/irisY.txt', delimiter=',',dtype=np.int)-1
         pcadim = 2
     elif dataset == 'wine':
-        X = genfromtxt('wineX.txt', delimiter=',')
-        y = genfromtxt('wineY.txt', delimiter=',',dtype=np.int)-1
+        X = genfromtxt('data/wineX.txt', delimiter=',')
+        y = genfromtxt('data/wineY.txt', delimiter=',',dtype=np.int)-1
         pcadim = 0
     elif dataset == 'olivetti':
-        X = genfromtxt('olivettifacesX.txt', delimiter=',')
+        X = genfromtxt('data/olivettifacesX.txt', delimiter=',')
         X = X/255
-        y = genfromtxt('olivettifacesY.txt', delimiter=',',dtype=np.int)
+        y = genfromtxt('data/olivettifacesY.txt', delimiter=',',dtype=np.int)
         pcadim = 20
     elif dataset == 'vowel':
-        X = genfromtxt('vowelX.txt', delimiter=',')
-        y = genfromtxt('vowelY.txt', delimiter=',',dtype=np.int)
+        X = genfromtxt('data/vowelX.txt', delimiter=',')
+        y = genfromtxt('data/vowelY.txt', delimiter=',',dtype=np.int)
         pcadim = 0
     else:
         print("Please specify a dataset!")
@@ -239,7 +241,6 @@ def plotBoundary(classifier, dataset='iris', split=0.7):
             # Predict
             grid[yi,xi] = trained_classifier.classify(np.array([[xx, yy]]))
 
-    
     ys = [i+xx+(i*xx)**2 for i in range(len(classes))]
     colormap = cm.rainbow(np.linspace(0, 1, len(ys)))
 
@@ -248,7 +249,7 @@ def plotBoundary(classifier, dataset='iris', split=0.7):
     conv = ColorConverter()
     for (color, c) in zip(colormap, classes):
         try:
-            CS = plt.contour(xRange,yRange,(grid==c).astype(float),15,linewidths=0.25,colors=conv.to_rgba_array(color))
+            CS = plt.contour(xRange, yRange, (grid==c).astype(float), linewidths=0.25, colors=conv.to_rgba_array(color))
         except ValueError:
             pass
         trClIdx = np.where(y[trIdx] == c)[0]
