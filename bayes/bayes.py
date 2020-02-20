@@ -45,8 +45,8 @@ def mlParams(X, labels, W=None):
     # TODO: compute mu and sigma
     for k in classes:      
         # sum the rows of X which correspond to class k, divide by the number of classes
-        mu[k,:] = np.sum( X[labels == k] ) / Nclasses 
-        sigma[k,:,:] = np.sum([np.outer(x-mu[k,:], x-mu[k,:])/Nclasses for x in X[labels == k]], 0)
+        mu[k,:] = np.sum( X[labels == k] ) / len(labels[labels==k])
+        sigma[k,:,:] = np.sum([np.outer(x-mu[k,:], x-mu[k,:])/ len(labels[labels==k]) for x in X[labels == k]], 0)
 
     return mu, sigma
 
@@ -75,9 +75,10 @@ def classifyBayes(X, prior, mu, sigma):
     assert(h.shape[0] == Npts)
     return h
 
+
 # TODO: Dont use inverse, fix later
 def discriminantFun(x, pk, mu, sigma):
-    return -0.5*( np.log(np.linalg.det(sigma) + np.dot( (x-mu), np.dot(np.linalg.inv(sigma), np.transpose(x))))) + np.log(pk)
+    return -0.5*( np.log(np.linalg.det(sigma)) + np.dot( (x-mu), np.dot(np.linalg.inv(sigma), np.transpose(x)))) + np.log(pk)
 
 
 # NOTE: no need to touch this
