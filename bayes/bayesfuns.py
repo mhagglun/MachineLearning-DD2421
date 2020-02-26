@@ -249,7 +249,7 @@ def plotBoundary(classifier, dataset='iris', split=0.7):
     conv = ColorConverter()
     for (color, c) in zip(colormap, classes):
         try:
-            CS = plt.contour(xRange, yRange, (grid==c).astype(float), linewidths=0.25, colors=conv.to_rgba_array(color))
+            CS = plt.contour(xRange,yRange,(grid==c).astype(float),15,linewidths=0.25,colors=conv.to_rgba_array(color))
         except ValueError:
             pass
         trClIdx = np.where(y[trIdx] == c)[0]

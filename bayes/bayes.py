@@ -44,9 +44,11 @@ def mlParams(X, labels, W=None):
 
     # TODO: compute mu and sigma
     for k in classes:      
-        # sum the rows of X which correspond to class k, divide by the number of classes
+        # sum the rows of X which correspond to class k, divide by the number of rows that belong to class k
         mu[k,:] = np.sum( X[labels == k] ) / len(labels[labels==k])
-        sigma[k,:,:] = np.sum([np.outer(x-mu[k,:], x-mu[k,:])/ len(labels[labels==k]) for x in X[labels == k]], 0)
+
+        # Compute the matrix sum of (x-mu)'(x-mu) for all x belonging to class k
+        sigma[k,:,:] = sum([np.outer(x-mu[k,:], x-mu[k,:])/ len(labels[labels==k]) for x in X[labels == k]])
 
     return mu, sigma
 
@@ -62,13 +64,11 @@ def classifyBayes(X, prior, mu, sigma):
     Nclasses, Ndims = np.shape(mu)
     logProb = np.zeros((Nclasses, Npts))
     
-
-    # TODO: Fix issue here since all points are classified as the same class
+    
 
     for k in range(Nclasses):
         logProb[k,:] = [ discriminantFun(x, prior[k] , mu[k,:], sigma[k,:,:]) for x in X]
          
-    
     # one possible way of finding max a-posteriori once
     # you have computed the log posterior
     h = np.argmax(logProb,axis=0)
@@ -78,7 +78,8 @@ def classifyBayes(X, prior, mu, sigma):
 
 # TODO: Dont use inverse, fix later
 def discriminantFun(x, pk, mu, sigma):
-    return -0.5*( np.log(np.linalg.det(sigma)) + np.dot( (x-mu), np.dot(np.linalg.inv(sigma), np.transpose(x)))) + np.log(pk)
+    sigma = np.diag(1/np.diag(sigma))
+    return -0.5*( np.log(np.linalg.det(sigma)) + np.dot( (x-mu), np.dot( sigma , x-mu))) + np.log(pk)
 
 
 # NOTE: no need to touch this
