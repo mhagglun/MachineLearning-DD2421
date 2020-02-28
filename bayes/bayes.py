@@ -41,17 +41,21 @@ def mlParams(X, labels, W=None):
     mu = np.zeros((Nclasses,Ndims))
     sigma = np.zeros((Nclasses,Ndims,Ndims))
 
-    # TODO: compute mu and sigma
     for k in classes: 
-        # sum the rows of X which correspond to class k, divide by the number of rows that belong to class k
-        mu[k,:] = np.sum( W[labels==k] * X[labels == k] ) / sum(W[labels==k])
+        # Sum the rows of X which correspond to class k, divide by the number of rows that belong to class k
+        mu[k,:] =  sum (W[labels==k] * X[labels == k] ) / sum(W[labels==k])
 
         # Compute the matrix sum of (x-mu)'(x-mu) for all x belonging to class k
-        diags = np.diag(sum([ np.squeeze(W[np.where(np.all(X==x, axis=1))]) * np.square(x-mu[k,:]) / sum(W[labels==k]) for x in X[labels == k] ]))
+        # diags = np.diag(sum([ np.squeeze(W[np.where(np.all(X==x, axis=1))]) * np.square(x-mu[k,:]) / np.sum(W[labels==k]) for x in X[labels == k] ]))
+        
+
+        X_k = X[labels==k]
+        diags = sum( [ W[i] * np.square(X_k[i,:]-mu[k,:]) / sum( W[labels==k] ) for i in range(len(X_k)) ] )
         sigma[k,:,:] = np.diag(diags)
 
         # # sum the rows of X which correspond to class k, divide by the number of rows that belong to class k
-        # mu[k,:] = np.sum( X[labels == k] ) / len(labels[labels==k])
+        # mu[k,:] = sum( X[labels == k] ) / len(labels[labels==k])
+
 
         # # Compute the matrix sum of (x-mu)'(x-mu) for all x belonging to class k
         # sigma[k,:,:] = sum([np.outer(x-mu[k,:], x-mu[k,:])/ len(labels[labels==k]) for x in X[labels == k]])
@@ -69,8 +73,6 @@ def classifyBayes(X, prior, mu, sigma):
     Npts = X.shape[0]
     Nclasses, Ndims = np.shape(mu)
     logProb = np.zeros((Nclasses, Npts))
-    
-    
 
     for k in range(Nclasses):
         logProb[k,:] = [ discriminantFun(x, prior[k] , mu[k,:], sigma[k,:,:]) for x in X]
@@ -82,13 +84,11 @@ def classifyBayes(X, prior, mu, sigma):
     return h
 
 
-# TODO: Dont use inverse, fix later
 def discriminantFun(x, pk, mu, sigma):
-    sigma = np.diag(1/np.diag(sigma))
-    return -0.5*( np.log(np.linalg.det(sigma)) + np.dot( (x-mu), np.dot( sigma , x-mu))) + np.log(pk)
+    inv_sigma = np.diag(1/np.diag(sigma))
+    return -0.5*( np.log(np.linalg.det(sigma)) + np.dot( (x-mu), np.dot( inv_sigma , x-mu))) + np.log(pk)
 
 
-# NOTE: no need to touch this
 class BayesClassifier(object):
     def __init__(self):
         self.trained = False
@@ -156,7 +156,7 @@ def trainBoost(base_classifier, X, labels, T=10):
 
         # Calculate weighted error
         correctClassifications = np.multiply(vote==labels, 1)               # Convert True/False to 1/0
-        error = np.dot(np.transpose(wCur), (1 - correctClassifications))   # Calculate the weighted error sum
+        error = np.dot(np.transpose(wCur), (1 - correctClassifications))    # Calculate the weighted error sum
 
         # Calculate alpha
         alpha = 0.5 * (np.log(1-error) - np.log(error))
@@ -232,27 +232,24 @@ plotBoundary(BoostClassifier(BayesClassifier()), dataset='iris',split=0.7)
 # Now repeat the steps with a decision tree classifier.
 
 
-#testClassifier(DecisionTreeClassifier(), dataset='iris', split=0.7)
+# testClassifier(DecisionTreeClassifier(), dataset='iris', split=0.7)
+# plotBoundary(DecisionTreeClassifier(), dataset='iris',split=0.7)
+
+
+# testClassifier(BoostClassifier(DecisionTreeClassifier(), T=10), dataset='iris',split=0.7)
+# plotBoundary(BoostClassifier(DecisionTreeClassifier(), T=10), dataset='iris',split=0.7)
+
+
+# testClassifier(DecisionTreeClassifier(), dataset='vowel',split=0.7)
+# testClassifier(BoostClassifier(DecisionTreeClassifier(), T=10), dataset='vowel',split=0.7)
 
 
 
-#testClassifier(BoostClassifier(DecisionTreeClassifier(), T=10), dataset='iris',split=0.7)
 
 
 
-#testClassifier(DecisionTreeClassifier(), dataset='vowel',split=0.7)
 
 
-
-#testClassifier(BoostClassifier(DecisionTreeClassifier(), T=10), dataset='vowel',split=0.7)
-
-
-
-#plotBoundary(DecisionTreeClassifier(), dataset='iris',split=0.7)
-
-
-
-#plotBoundary(BoostClassifier(DecisionTreeClassifier(), T=10), dataset='iris',split=0.7)
 
 
 # ## Bonus: Visualize faces classified using boosted decision trees
