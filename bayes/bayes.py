@@ -4,7 +4,7 @@
 import numpy as np
 from scipy import misc
 from importlib import reload
-from bayesfuns import *
+from labfuns import *
 import random
 
 
@@ -19,7 +19,7 @@ def computePrior(labels, W=None):
     classes = np.unique(labels)
     Nclasses = np.size(classes)
 
-    prior = np.array([ len(W[labels==k])/Npts for k in classes])
+    prior = np.array([ sum(W[labels==k]) for k in classes]) / Npts
     return prior # The prior probability of a point belonging to class k
 
 
@@ -43,22 +43,11 @@ def mlParams(X, labels, W=None):
 
     for k in classes: 
         # Sum the rows of X which correspond to class k, divide by the number of rows that belong to class k
-        mu[k,:] =  sum (W[labels==k] * X[labels == k] ) / sum(W[labels==k])
-
-        # Compute the matrix sum of (x-mu)'(x-mu) for all x belonging to class k
-        # diags = np.diag(sum([ np.squeeze(W[np.where(np.all(X==x, axis=1))]) * np.square(x-mu[k,:]) / np.sum(W[labels==k]) for x in X[labels == k] ]))
+        mu[k,:] =  np.sum(W[labels==k] * X[labels == k], axis=0 ) / sum(W[labels==k])
         
-
         X_k = X[labels==k]
-        diags = sum( [ W[i] * np.square(X_k[i,:]-mu[k,:]) / sum( W[labels==k] ) for i in range(len(X_k)) ] )
+        diags = np.sum( [ W[i] * np.square(X_k[i,:]-mu[k,:])  for i in range(len(X_k)) ], axis=0) / sum( W[labels==k])
         sigma[k,:,:] = np.diag(diags)
-
-        # # sum the rows of X which correspond to class k, divide by the number of rows that belong to class k
-        # mu[k,:] = sum( X[labels == k] ) / len(labels[labels==k])
-
-
-        # # Compute the matrix sum of (x-mu)'(x-mu) for all x belonging to class k
-        # sigma[k,:,:] = sum([np.outer(x-mu[k,:], x-mu[k,:])/ len(labels[labels==k]) for x in X[labels == k]])
 
     return mu, sigma
 
@@ -73,20 +62,19 @@ def classifyBayes(X, prior, mu, sigma):
     Npts = X.shape[0]
     Nclasses, Ndims = np.shape(mu)
     logProb = np.zeros((Nclasses, Npts))
-
+    
     for k in range(Nclasses):
-        logProb[k,:] = [ discriminantFun(x, prior[k] , mu[k,:], sigma[k,:,:]) for x in X]
+        logProb[k,:] = [ discriminantFun(x, prior[k] , mu[k], sigma[k]) for x in X]
          
     # one possible way of finding max a-posteriori once
     # you have computed the log posterior
     h = np.argmax(logProb,axis=0)
-    assert(h.shape[0] == Npts)
     return h
 
 
-def discriminantFun(x, pk, mu, sigma):
+def discriminantFun(x, prior, mu, sigma):
     inv_sigma = np.diag(1/np.diag(sigma))
-    return -0.5*( np.log(np.linalg.det(sigma)) + np.dot( (x-mu), np.dot( inv_sigma , x-mu))) + np.log(pk)
+    return -(1/2)*( np.log(np.linalg.det(sigma)) + np.dot( (x-mu), inv_sigma.dot(x-mu))) + np.log(prior)
 
 
 class BayesClassifier(object):
@@ -155,18 +143,19 @@ def trainBoost(base_classifier, X, labels, T=10):
         vote = classifiers[-1].classify(X)
 
         # Calculate weighted error
-        correctClassifications = np.multiply(vote==labels, 1)               # Convert True/False to 1/0
-        error = np.dot(np.transpose(wCur), (1 - correctClassifications))    # Calculate the weighted error sum
+        correctClassifications = np.multiply(vote==labels, 1)   # Check if vote is equal to label and then convert True/False statement to 1/0
+        error = np.sum(wCur[correctClassifications==0])         # Calculate the weighted error sum. It's the sum of weights of points wrongly classified
+
 
         # Calculate alpha
-        alpha = 0.5 * (np.log(1-error) - np.log(error))
+        alpha = (np.log(1-error+1e-10) - np.log(error+1e-10))/2     # Added some small padding to avoid log(0)
+        alphas.append(alpha) # Save new alpha
 
         # Update weights
         wCur = [wCur[i] * np.exp( (-1)**i * alpha ) for i in correctClassifications]  # Multiply by exp(+- alpha)
-        wCur = wCur / sum(wCur)                                                       # Normalize weights s.t. sum wCur = 1
+        wCur /= sum(wCur)                                                     # Normalize weights s.t. sum wCur = 1
 
-        alphas.append(alpha) # Save new alpha
-
+        
     return classifiers, alphas
 
 # in:       X - N x d matrix of N data points
@@ -185,10 +174,10 @@ def classifyBoost(X, classifiers, alphas, Nclasses):
         votes = np.zeros((Npts,Nclasses))       # The columns hold the count of votes
 
         # Calculate weighted votes for each trained classifier
-        for k in range(Ncomps):
-            vote = classifiers[k].classify(X)
+        for idx, classifier in enumerate(classifiers):
+            voted = classifier.classify(X)
             for i in range(Nclasses):
-                votes[:,i] +=  alphas[k] * np.multiply(vote==i,1)        # Count the weighted vote of class for each point
+                votes[:,i] +=  alphas[idx] * np.multiply(voted==i,1)        # Count the weighted vote of class for each point
 
     # one way to compute yPred after accumulating the votes
     return np.argmax(votes,axis=1)
@@ -196,8 +185,6 @@ def classifyBoost(X, classifiers, alphas, Nclasses):
 
 # The implemented functions can now be summarized another classifer, the `BoostClassifier` class. This class enables boosting different types of classifiers by initializing it with the `base_classifier` argument. No need to add anything here.
 
-
-# NOTE: no need to touch this
 class BoostClassifier(object):
     def __init__(self, base_classifier, T=10):
         self.base_classifier = base_classifier

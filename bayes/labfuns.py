@@ -3,15 +3,15 @@ import numpy as np
 from numpy import genfromtxt
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
+import seaborn as sns
 from matplotlib.patches import Ellipse
 from matplotlib.colors import ColorConverter
 from matplotlib.axes._axes import _log as matplotlib_axes_logger
 import random as rnd
-from sklearn.datasets import make_blobs
+from sklearn.datasets.samples_generator import make_blobs
 from sklearn import decomposition, tree
-import seaborn as sns
 
-sns.set_style('darkgrid')
+sns.set()
 matplotlib_axes_logger.setLevel('ERROR')
 
 def plot_cov_ellipse(cov, pos, nstd=2, ax=None, **kwargs):
@@ -149,7 +149,7 @@ def scatter2D(X,y):
     for label in labels:
         classIdx = np.where(y==label)[0]
         Xclass = X[classIdx,:]
-        plt.scatter(Xclass[:,0],Xclass[:,1],linewidths=1,s=25,color=colors[label],marker='o',alpha=0.75)
+        plt.scatter(Xclass[:,0],Xclass[:,1],linewidths=1,s=25,color=colors[label],marker='o',alpha=1)
         c += 1.
 
     plt.show()
@@ -179,7 +179,7 @@ def testClassifier(classifier, dataset='iris', dim=0, split=0.7, ntrials=100):
 
     X,y,pcadim = fetchDataset(dataset)
 
-    means = np.zeros(ntrials,);
+    means = np.zeros(ntrials,)
 
     for trial in range(ntrials):
 
@@ -241,6 +241,7 @@ def plotBoundary(classifier, dataset='iris', split=0.7):
             # Predict
             grid[yi,xi] = trained_classifier.classify(np.array([[xx, yy]]))
 
+    
     ys = [i+xx+(i*xx)**2 for i in range(len(classes))]
     colormap = cm.rainbow(np.linspace(0, 1, len(ys)))
 
