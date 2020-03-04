@@ -19,7 +19,8 @@ def computePrior(labels, W=None):
     classes = np.unique(labels)
     Nclasses = np.size(classes)
 
-    prior = np.array([ sum(W[labels==k]) for k in classes]) / Npts
+    prior = np.array([ sum(W[labels==k]) for k in classes])
+    prior /= sum(prior)
     return prior # The prior probability of a point belonging to class k
 
 
@@ -28,7 +29,7 @@ def computePrior(labels, W=None):
 #
 # out:    mu       - C x d matrix of class means (mu[i] - class i mean)
 #       sigma      - C x d x d matrix of class covariances (sigma[i] - class i sigma)
-#
+
 def mlParams(X, labels, W=None):
     assert(X.shape[0]==labels.shape[0])
     Npts, Ndims = np.shape(X)
@@ -41,13 +42,19 @@ def mlParams(X, labels, W=None):
     mu = np.zeros((Nclasses,Ndims))
     sigma = np.zeros((Nclasses,Ndims,Ndims))
 
-    for k in classes: 
-        # Sum the rows of X which correspond to class k, divide by the number of rows that belong to class k
-        mu[k,:] =  np.sum(W[labels==k] * X[labels == k], axis=0 ) / sum(W[labels==k])
-        
-        X_k = X[labels==k]
-        diags = np.sum( [ W[i] * np.square(X_k[i,:]-mu[k,:])  for i in range(len(X_k)) ], axis=0) / sum( W[labels==k])
-        sigma[k,:,:] = np.diag(diags)
+    # Calculate mu for each class
+    for jdx, c in enumerate(classes):
+        idx = np.where(labels == c)[0]                                  # Get indices for data points of type (class) c
+        xw = X[idx,:] * W[idx]                                          # Add weights to the points of type c
+        mu[jdx] = np.sum(xw, axis=0)/np.sum(W[idx])                     # Compute the mean
+
+    # Calculate sigma for set of points belong to a class c
+    for jdx, c in enumerate(classes):
+        idx = np.where(labels == c)[0]                                  # Get indices for data points of type (class) c
+        xw = X[idx, :]                                                  # Add weights to the points of type c
+        weighted_sd = np.square(xw - mu[jdx]) * W[idx]                  # Calculate the weighted standard deviation w(x - µ)^2
+        mean_weighted_sd = np.sum(weighted_sd, axis=0) / np.sum(W[idx]) # Calculate mean of the weighted standard deviation
+        sigma[jdx] = np.diag(mean_weighted_sd)                          # Only diagonal elements since Naive Bayes Classier assumes variable independence
 
     return mu, sigma
 
@@ -65,9 +72,7 @@ def classifyBayes(X, prior, mu, sigma):
     
     for k in range(Nclasses):
         logProb[k,:] = [ discriminantFun(x, prior[k] , mu[k], sigma[k]) for x in X]
-         
-    # one possible way of finding max a-posteriori once
-    # you have computed the log posterior
+     
     h = np.argmax(logProb,axis=0)
     return h
 
@@ -92,31 +97,10 @@ class BayesClassifier(object):
         return classifyBayes(X, self.prior, self.mu, self.sigma)
 
 
-# ## Test the Maximum Likelihood estimates
-# 
-# Call `genBlobs` and `plotGaussian` to verify your estimates.
-
-
-# X, labels = genBlobs(centers=5)
-# mu, sigma = mlParams(X,labels)
-# plotGaussian(X,labels,mu,sigma)
-
-
-# Call the `testClassifier` and `plotBoundary` functions for this part.
-
-
-# testClassifier(BayesClassifier(), dataset='iris', split=0.7)
-# plotBoundary(BayesClassifier(), dataset='iris',split=0.7)
-
-
-
-# testClassifier(BayesClassifier(), dataset='vowel', split=0.7)
-
-
-
-# ## Boosting functions to implement
-# 
-# The lab descriptions state what each function should do.
+## Test the Maximum Likelihood estimates
+X, labels = genBlobs(centers=5)
+mu, sigma = mlParams(X,labels)
+plotGaussian(X,labels,mu,sigma)
 
 
 # in: base_classifier - a classifier of the type that we will boost, e.g. BayesClassifier
@@ -149,11 +133,11 @@ def trainBoost(base_classifier, X, labels, T=10):
 
         # Calculate alpha
         alpha = (np.log(1-error+1e-10) - np.log(error+1e-10))/2     # Added some small padding to avoid log(0)
-        alphas.append(alpha) # Save new alpha
+        alphas.append(alpha)                                        # Save new alpha
 
         # Update weights
-        wCur = [wCur[i] * np.exp( (-1)**i * alpha ) for i in correctClassifications]  # Multiply by exp(+- alpha)
-        wCur /= sum(wCur)                                                     # Normalize weights s.t. sum wCur = 1
+        wCur = [wCur[idx] * np.exp( alpha * (-1)**val ) for idx, val in enumerate(correctClassifications)]  # Multiply weights by exp(+- alpha)
+        wCur /= sum(wCur)                                                                                   # Normalize weights s.t. sum wCur = 1
 
         
     return classifiers, alphas
@@ -183,7 +167,8 @@ def classifyBoost(X, classifiers, alphas, Nclasses):
     return np.argmax(votes,axis=1)
 
 
-# The implemented functions can now be summarized another classifer, the `BoostClassifier` class. This class enables boosting different types of classifiers by initializing it with the `base_classifier` argument. No need to add anything here.
+# The `BoostClassifier` class. 
+# This class enables boosting different types of classifiers by initializing it with the `base_classifier` argument.
 
 class BoostClassifier(object):
     def __init__(self, base_classifier, T=10):
@@ -202,22 +187,29 @@ class BoostClassifier(object):
         return classifyBoost(X, self.classifiers, self.alphas, self.nbr_classes)
 
 
-# ## Run some experiments
-# 
-# Call the `testClassifier` and `plotBoundary` functions for this part.
 
+## Bayes- iris ##
+
+testClassifier(BayesClassifier(), dataset='iris', split=0.7)
+plotBoundary(BayesClassifier(), dataset='iris',split=0.7)
 
 testClassifier(BoostClassifier(BayesClassifier(), T=10), dataset='iris',split=0.7)
 plotBoundary(BoostClassifier(BayesClassifier()), dataset='iris',split=0.7)
 
 
+## Bayes- vowels ##
+
+
+# testClassifier(BayesClassifier(), dataset='vowel', split=0.7)
+# plotBoundary(BayesClassifier(), dataset='vowel',split=0.7)
+
 # testClassifier(BoostClassifier(BayesClassifier(), T=10), dataset='vowel',split=0.7)
-
-
+# plotBoundary(BoostClassifier(BayesClassifier()), dataset='vowel',split=0.7)
 
 
 # Now repeat the steps with a decision tree classifier.
 
+## Decision trees - iris ##
 
 # testClassifier(DecisionTreeClassifier(), dataset='iris', split=0.7)
 # plotBoundary(DecisionTreeClassifier(), dataset='iris',split=0.7)
@@ -227,31 +219,27 @@ plotBoundary(BoostClassifier(BayesClassifier()), dataset='iris',split=0.7)
 # plotBoundary(BoostClassifier(DecisionTreeClassifier(), T=10), dataset='iris',split=0.7)
 
 
-# testClassifier(DecisionTreeClassifier(), dataset='vowel',split=0.7)
+## Decision trees - vowels ##
+
+# testClassifier(DecisionTreeClassifier(), dataset='vowel', split=0.7)
+# plotBoundary(DecisionTreeClassifier(), dataset='vowel',split=0.7)
+
+
 # testClassifier(BoostClassifier(DecisionTreeClassifier(), T=10), dataset='vowel',split=0.7)
-
-
-
-
-
+# plotBoundary(BoostClassifier(DecisionTreeClassifier(), T=10), dataset='vowel',split=0.7)
 
 
 
 
 
 # ## Bonus: Visualize faces classified using boosted decision trees
-# 
-# Note that this part of the assignment is completely voluntary! First, let's check how a boosted decision tree classifier performs on the olivetti data. Note that we need to reduce the dimension a bit using PCA, as the original dimension of the image vectors is `64 x 64 = 4096` elements.
+#
+# First, let's check how a boosted decision tree classifier performs on the olivetti data. 
+# Note that we need to reduce the dimension a bit using PCA, as the original dimension of the image vectors is `64 x 64 = 4096` elements.
 
 
-#testClassifier(BayesClassifier(), dataset='olivetti',split=0.7, dim=20)
-
-
-
+# testClassifier(BayesClassifier(), dataset='olivetti',split=0.7, dim=20)
 #testClassifier(BoostClassifier(DecisionTreeClassifier(), T=10), dataset='olivetti',split=0.7, dim=20)
-
-
-# You should get an accuracy around 70%. If you wish, you can compare this with using pure decision trees or a boosted bayes classifier. Not too bad, now let's try and classify a face as belonging to one of 40 persons!
 
 
 #X,y,pcadim = fetchDataset('olivetti') # fetch the olivetti data
