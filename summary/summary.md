@@ -63,7 +63,12 @@ Repeat steps 3-5
 <img src="media/kmeans.gif" alt="drawing" width="250">
 
 ### Expectation maximization
-Expectation maximization(EM) is an iterative method to find *maximum likelihood* (ML) or *maximum a posteriori* (MAP) estimates of parameters in statistical models, where the model depends on unobserved latent variables.
+Expectation maximization (EM) is an iterative method used to find *maximum likelihood* (ML) or *maximum a posteriori* (MAP) estimates of parameters in statistical models, where the model depends on unobserved latent variables.
+
+The first mode attempts to estimate the missing or latent variables, called the estimation-step or E-step. The second mode attempts to optimize the parameters of the model to best explain the data, called the maximization-step or M-step.
+
+* E-Step: Create a function for the expectation of the log-likelihood evaluted using the current estimate for the parameters
+* M-Step: Compute parameters that maximize the expected log-likelihood found on the E-step. These parameter estimates are then used to determine the distribution of the latent variables in the next E-step.
 
 <img src="media/em.gif" alt="drawing" width="250">
 
