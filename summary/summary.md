@@ -60,6 +60,8 @@ K-means is an unsupervised algorithm which is used to identify clusters in data.
 Repeat steps 3-5
 
 
+<img src="media/kmeans.gif" alt="drawing" width="250">
+
 ### Expectation maximization
 Expectation maximization(EM) is an iterative method to find *maximum likelihood* (ML) or *maximum a posteriori* (MAP) estimates of parameters in statistical models, where the model depends on unobserved latent variables.
 
