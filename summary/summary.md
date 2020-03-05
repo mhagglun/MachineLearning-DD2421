@@ -3,7 +3,9 @@
 # Entropy
 
 ### Shannon Entropy
-Defined as $H = - \sum_{i} p_{i} log_{b}p_{i}$
+It is defined as,
+
+<img src="https://render.githubusercontent.com/render/math?math=H = - \sum_{i} p_{i} log_{b}p_{i}">
 
 Example:
 Consider a single toss of skewed coin (it is likely to show one side more than the other side). Regarding the uncertainty of the outcome {head, tail}.
