@@ -23,7 +23,29 @@ To be added.
 
 #### The curse of dimensionality
 
+1. If we have more features than observations than we run the risk of massively overfitting our model — this would generally result in terrible out of sample performance.
+
+2. When we have too many features, observations become harder to cluster — believe it or not, **too many dimensions causes every observation in your dataset to appear equidistant from all the others**. And because clustering uses a distance measure such as Euclidean distance to quantify the similarity between observations, this is a big problem. **If the distances are all approximately equal, then all the observations appear equally alike (as well as equally different), and no meaningful clusters can be formed.**
+
+
+
+> As the number of features or dimension grows, the amount of data we need to generalize accurately grows exponentially
+
+This exponential growth in data causes high sparsity in the data set and unnecessarily increases storage space and processing time for the particular modelling algorithm.
+
 #### The bias-variance tradeoff
+
+Intuitive explanation of bias and variance
+
+<img src="media/biasvariance2.png" alt="drawing" width="300"/>
+
+The trade off visualized
+
+<img src="media/biasvariance1.png" alt="drawing" width="300"/>
+
+What in general happens to the prediction error
+
+<img src="media/predictionerror.png" alt="drawing" width="300"/>
 
 # Regression
 
@@ -133,9 +155,39 @@ To be added
 
 # Ensemble Methods
 
+### Why combine classifiers
+
+> The **crowd** is wiser than any **individual**
+The collective knowledge of a diverse and independent body of people typically exceeds the knowledge of any single individual and can be harnessed by voting.
+
+There are four elements to a wise crowd
+1. **Diversity of opinion.** People in the crowd should have a range of experiences, education and opinions.
+2. **Independence.** Prediction by person in crowd is not influenced by the other people in the crowd.
+3. **Decentralization.** People have specializations and local knowledge.
+4. **Aggregation.** There is a mechanism for aggregating all predictions into one single prediction, which represents the crowd opinion.
+
 ### Bagging
 
+Bagging is short for **B**ootstrap **Agg**regati**ng**.
+
+The idea is to form multiple training (bootstrap) samples <img src="https://render.githubusercontent.com/render/math?math=S_{i}"> from the original training data set by sampling from it with replacement.
+
+Then a model can be trained for each bootstrap sample to generate an ensemble of models. 
+
+<img src="media/bagging.png" alt="drawing" width="300">
+
+Each model can then be combined to form the bagged classifier
+
+<img src="media/baggedclassifier.png" alt="drawing" width="300">
+
+Bagging is a procedure to reduce the variance of our classifier. It is a powerful tool to control overfitting of the model. 
+
+**Note:** It only produces good results for **high variance, low bias** classifiers
+
 ### Decision Forests
+
+
+
 
 # Dimensionality Reduction
 
