@@ -18,6 +18,41 @@ Thus the correct answer is that,
 # Decision Trees
 To be added.
 
+# k-Nearest Neighbors
+
+The k-NN algorithm assumes that similar things exist in close proximity to each other.
+
+When classifying a point $x$:
+
+1. Select the number of neighbors k
+2. For each sample in the data set
+   1. Calculate distance between the query point $x$ and the current point
+   2. Store distances and the index of the example in an ordered collection
+3. Sort the entire ordered collection from smallest to largest distances
+4. Pick the first k entries from the sorted collection
+5. Get labels of the selected k entries
+6. Majority vote classifies the query point $x$
+
+<img src="media/knn.gif" alt="drawing" width="300"/>
+
+Pros:
+
+* Simple method, only need to specify k
+* Applicable to multi-class problems
+* Good performance, effective in low dimension data
+
+Cons:
+
+* Computationally expensive to calculate the distances
+* Requires a lot of memory to store 
+
+
+Comparison k-NN / 1-NN
+
+* Boundary becomes smoother as k increases
+* Lower computational cost for lower k
+* k-NN generalizes better given many samples 
+
 
 # Challenges in ML
 
@@ -216,9 +251,5 @@ The projection length is used as a similiarity measurement and is given by,
 
 $S = \sum^{p}_{i} (x,u_{i})^{2}$
 
-
-
-
-### Similarity Measures
 
 ### Fisher's Criterion
