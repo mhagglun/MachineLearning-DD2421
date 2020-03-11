@@ -5,7 +5,7 @@
 ### Shannon Entropy
 It is defined as,
 
-<img src="https://render.githubusercontent.com/render/math?math=H = - \sum_{i} p_{i} log_{b}p_{i}">
+<img src="/summary/tex/fffc9e0613747165181ea12eabb79556.svg?invert_in_darkmode&sanitize=true" align=middle width=132.31133849999998pt height=24.657735299999988pt/>
 
 Example:
 Consider a single toss of skewed coin (it is likely to show one side more than the other side). Regarding the uncertainty of the outcome {head, tail}.
@@ -56,7 +56,7 @@ Comparison k-NN / 1-NN
 
 # Challenges in ML
 
-#### The curse of dimensionality
+## The curse of dimensionality
 
 1. If we have more features than observations than we run the risk of massively overfitting our model — this would generally result in terrible out of sample performance.
 
@@ -68,7 +68,7 @@ Comparison k-NN / 1-NN
 
 This exponential growth in data causes high sparsity in the data set and unnecessarily increases storage space and processing time for the particular modelling algorithm.
 
-#### The bias-variance tradeoff
+## The Bias-Variance Tradeoff
 
 Intuitive explanation of bias and variance
 
@@ -84,7 +84,7 @@ What in general happens to the prediction error
 
 # Regression
 
-### RANSAC - RANdom SAmpling Consensus
+## RANSAC - RANdom SAmpling Consensus
 
 *Repeat M times:*
 1. Select a random subset of the original data
@@ -94,7 +94,7 @@ What in general happens to the prediction error
 
 <img src="media/ransac.gif" alt="drawing" width="400"/>
 
-### Nearest Neighbor Regression
+## Nearest Neighbor Regression
 
 
 <!-- # Probabilistic Reasoning
@@ -104,7 +104,7 @@ To be added. -->
 <!-- To be added. -->
 
 # Priors and Latent Variables
-### K-means
+## K-means
 
 K-means is an unsupervised algorithm which is used to identify clusters in data.
 
@@ -119,7 +119,7 @@ Repeat steps 3-5
 
 <img src="media/kmeans.gif" alt="drawing" width="250">
 
-### Expectation maximization
+## Expectation maximization
 Expectation maximization (EM) is an iterative method used to find *maximum likelihood* (ML) or *maximum a posteriori* (MAP) estimates of parameters in statistical models, where the model depends on unobserved latent variables.
 
 The first mode attempts to estimate the missing or latent variables, called the estimation-step or E-step. The second mode attempts to optimize the parameters of the model to best explain the data, called the maximization-step or M-step.
@@ -131,7 +131,7 @@ The first mode attempts to estimate the missing or latent variables, called the 
 
 # Artificial Neural Networks
 
-### Perceptron
+## Perceptron
 A perceptron is a simple mathematical model of a neuron.
 A single perceptron can serve as a classifier or regressor. It is a building block in a more complex artifical neural network structures which are used to solve advanced problems.
 
@@ -147,7 +147,7 @@ The network is trained by adjusting the weights and bias each node. Adjustments 
 
 A perceptron is a single layer neural network and a multi-layer perceptron is called a Neural Network.
 
-### Backpropagation
+## Backpropagation
 Short for backward propagation of errors, is an algorithm for supervised learning of artificial neural networks using gradient descent.
 
 <img src="media/neuralnet.gif" alt="drawing" width="300">
@@ -175,7 +175,7 @@ There are three steps in this method:
 > Once the output values and generalized errors are known for each node in the network, the weights can be updated. This can be done locally since no more global communication is needed.
 
 
-### Dropout
+## Dropout
 
 Large neural nets trained on relatively small datasets can overfit the training data.
 Dropout is regularization method for reducing overfitting in neural networks by preventing complex co-adaptations on training data. It is a very efficient way of performing model averaging with neural networks.
@@ -201,11 +201,30 @@ There are four elements to a wise crowd
 3. **Decentralization.** People have specializations and local knowledge.
 4. **Aggregation.** There is a mechanism for aggregating all predictions into one single prediction, which represents the crowd opinion.
 
-### Bagging
+
+## Boosting
+
+The main idea of boosting is to sequentially add new models to the ensemble. For each particular iteration a new weak learner is trained with respect to the error of the whole ensemble learnt so far.
+
+**Core idea**
+
+* Performance of classifiers <img src="/summary/tex/d590a94c9587fa932f88e32c6ab31eb4.svg?invert_in_darkmode&sanitize=true" align=middle width=67.81189635pt height=22.831056599999986pt/> helps define <img src="/summary/tex/b1c1141803ca2250b3d9577374e07178.svg?invert_in_darkmode&sanitize=true" align=middle width=31.08082724999999pt height=22.831056599999986pt/>
+* Maintain weights <img src="/summary/tex/fb67a66168c055547f98c88d4528002b.svg?invert_in_darkmode&sanitize=true" align=middle width=17.17663859999999pt height=26.085962100000025pt/> for each training sample <img src="/summary/tex/7ece59a2386a50d8d18381470498281f.svg?invert_in_darkmode&sanitize=true" align=middle width=48.49130714999999pt height=24.65753399999998pt/>
+* Large weights <img src="/summary/tex/fb67a66168c055547f98c88d4528002b.svg?invert_in_darkmode&sanitize=true" align=middle width=17.17663859999999pt height=26.085962100000025pt/> imply that <img src="/summary/tex/761879c521ce90fc5ebc2cfeb7d684f0.svg?invert_in_darkmode&sanitize=true" align=middle width=14.045887349999989pt height=18.666631500000015pt/> has greater influence on
+* <img src="/summary/tex/1a49c503284de8a1bd43aa7b8f43ed4e.svg?invert_in_darkmode&sanitize=true" align=middle width=89.15552084999999pt height=22.831056599999986pt/> / <img src="/summary/tex/315c48aa4f8b1a16692ebd9d4bf39a22.svg?invert_in_darkmode&sanitize=true" align=middle width=109.88846714999998pt height=22.465723500000017pt/> weight for point that gets <img src="/summary/tex/cb3787c4eeef143956888cdc2dc87727.svg?invert_in_darkmode&sanitize=true" align=middle width=89.90707769999999pt height=22.831056599999986pt/> / <img src="/summary/tex/86c8c43796c5c675428f5e04c4e4e800.svg?invert_in_darkmode&sanitize=true" align=middle width=112.69863825pt height=22.831056599999986pt/> classified 
+* Calculate reliability coefficient <img src="/summary/tex/936a000b0d1e4428296f6e62501589d2.svg?invert_in_darkmode&sanitize=true" align=middle width=15.542290499999991pt height=26.085962100000025pt/> for classifier <img src="/summary/tex/b96b0f3c840c06f908af6ea2bcd501db.svg?invert_in_darkmode&sanitize=true" align=middle width=14.436907649999991pt height=26.085962100000025pt/> based on the error
+
+<img src="media/boosting_idea.png" alt="drawing" width="300">
+
+Example of the convergence when boosting weak classifiers
+
+<img src="media/boosting.gif" alt="drawing" width="300">
+
+## Bagging
 
 Bagging is short for **B**ootstrap **Agg**regati**ng**.
 
-The idea is to form multiple training (bootstrap) samples <img src="https://render.githubusercontent.com/render/math?math=S_{i}"> from the original training data set by sampling from it with replacement.
+The idea is to form multiple training (bootstrap) samples <img src="/summary/tex/d28140eda2d12e24b434e011b930fa23.svg?invert_in_darkmode&sanitize=true" align=middle width=14.730823799999989pt height=22.465723500000017pt/> from the original training data set by sampling from it with replacement.
 
 Then a model can be trained for each bootstrap sample to generate an ensemble of models. 
 
@@ -219,9 +238,17 @@ Bagging is a procedure to reduce the variance of our classifier. It is a powerfu
 
 **Note:** It only produces good results for **high variance, low bias** classifiers
 
-### Decision Forests
+## Random Forest
+
+A random forest consists of multiple random decision trees. Each tree is built on a random sample of the training data. Then at each node, a subset of features are randomly selected to generate the best split,
 
 
+> As such, there are two kinds of randomness that form the basic principle of Random Forests,
+> 
+* Sampling training data (Bagging / Bootstrapping)
+* Feature selection at each node
+
+Predictions are made by majority vote from the decision trees in the forest which is why it's an ensemble method.
 
 
 # Dimensionality Reduction
@@ -236,12 +263,12 @@ The general idea is to reduce effective the number of variables, considering onl
 ### Feature Selection
 Three strategies to work with here: **Filter strategy** (e.g. information gain), **wrapper strategy** (e.g. search guided by accuracy) and **embedded strategy** (regularization methods, e.g. LASSO).
 
-### Principal Component Analysis
+## Principal Component Analysis
 Performs a linear mapping of the data to a lower dimensional space in such a way that the variance in the low-dimensional representation is maximized.
 
 This is done by constructing the covariance matrix of the data and then computing the eigendecomposition. The eigenvectors that correspond to the largest eigenvalues (the principal components) are then used to reconstruct a large fraction of the variance of the original data.
 
-### Subspace methods
+## Subspace methods
 
 The concept of subspace: A subspace L is a set of linearly independent vectors that span a space which is a subset of a larger space. The general idea is to exploit the localization of the pattern distribution.
 
@@ -251,5 +278,29 @@ The projection length is used as a similiarity measurement and is given by,
 
 <img src="/summary/tex/7049aeed13b3851ba679df8da3260b52.svg?invert_in_darkmode&sanitize=true" align=middle width=108.81696044999998pt height=26.76175259999998pt/>
 
+<img src="media/subspace.png" alt="drawing" width="250">
 
-### Fisher's Criterion
+## Fisher's Method
+
+>The idea is to find the subspace (dimension) that is best suited to classification.
+
+<img src="media/fishers.png" alt="drawing" width="300">
+
+
+**Fisher's Criterion** is defined as,
+
+<p align="center"><img src="/summary/tex/8d5bdf29b5f3b5a778f195f251e2f327.svg?invert_in_darkmode&sanitize=true" align=middle width=176.0906169pt height=42.919577249999996pt/></p>
+
+Want to maximize the ratio of between-class variance to within-class variance.
+
+<p align="center"><img src="/summary/tex/341b07f87fc970557eb3bb0ea489ed66.svg?invert_in_darkmode&sanitize=true" align=middle width=227.05797015000002pt height=18.7598829pt/></p>
+
+Where <img src="/summary/tex/fd8be73b54f5436a5cd2e73ba9b6bfa9.svg?invert_in_darkmode&sanitize=true" align=middle width=9.58908224999999pt height=22.831056599999986pt/> is the Lagrange multiplier.
+
+<p align="center"><img src="/summary/tex/c7ce8e37c30726e3221d3e8a5af8f95c.svg?invert_in_darkmode&sanitize=true" align=middle width=95.3137581pt height=13.881256950000001pt/></p>
+
+<p align="center"><img src="/summary/tex/49dc69b4e01e409ece0aa6594cdac218.svg?invert_in_darkmode&sanitize=true" align=middle width=98.95529985pt height=19.278426749999998pt/></p>
+
+Therefore, <img src="/summary/tex/4e5bf6cb2265dea9689d1bdd192c8b39.svg?invert_in_darkmode&sanitize=true" align=middle width=124.63109009999998pt height=24.65753399999998pt/>
+
+ The eigenvector corresponding to the largest eigenvalue of <img src="/summary/tex/aeeff88599f2cfaa3e7d4cbdcfa847dc.svg?invert_in_darkmode&sanitize=true" align=middle width=49.24840634999998pt height=28.894955100000008pt/> gives A that maximizes Fisher's Criterion
