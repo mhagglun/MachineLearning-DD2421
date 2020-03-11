@@ -5,7 +5,7 @@
 ### Shannon Entropy
 It is defined as,
 
-<img src="/summary/tex/fffc9e0613747165181ea12eabb79556.svg?invert_in_darkmode&sanitize=true" align=middle width=132.31133849999998pt height=24.657735299999988pt/>
+<p align="center"><img src="/summary/tex/71d74f0179c00932ace85513f1a597fb.svg?invert_in_darkmode&sanitize=true" align=middle width=133.23123164999998pt height=36.6554298pt/></p>
 
 Example:
 Consider a single toss of skewed coin (it is likely to show one side more than the other side). Regarding the uncertainty of the outcome {head, tail}.
@@ -22,7 +22,7 @@ To be added.
 
 The k-NN algorithm assumes that similar things exist in close proximity to each other.
 
-When classifying a point <img src="/summary/tex/332cc365a4987aacce0ead01b8bdcc0b.svg?invert_in_darkmode&sanitize=true" align=middle width=9.39498779999999pt height=14.15524440000002pt/>:
+When classifying a point <img src="/summary/tex/332cc365a4987aacce0ead01b8bdcc0b.svg?invert_in_darkmode&sanitize=true" align=middle width=9.39498779999999pt height=14.15524440000002pt/>
 
 1. Select the number of neighbors k
 2. For each sample in the data set
@@ -33,8 +33,9 @@ When classifying a point <img src="/summary/tex/332cc365a4987aacce0ead01b8bdcc0b
 5. Get labels of the selected k entries
 6. Majority vote classifies the query point <img src="/summary/tex/332cc365a4987aacce0ead01b8bdcc0b.svg?invert_in_darkmode&sanitize=true" align=middle width=9.39498779999999pt height=14.15524440000002pt/>
 
-<img src="media/knn.gif" alt="drawing" width="300"/>
-
+<p align="center">
+<img src="media/knn.gif" alt="drawing" width="300" />
+</p>
 Pros:
 
 * Simple method, only need to specify k
@@ -71,16 +72,19 @@ This exponential growth in data causes high sparsity in the data set and unneces
 ## The Bias-Variance Tradeoff
 
 Intuitive explanation of bias and variance
-
-<img src="media/biasvariance2.png" alt="drawing" width="300"/>
-
+<p align="center">
+<img src="media/biasvariance2.png" alt="drawing" width="400"/>
+</p>
 The trade off visualized
 
-<img src="media/biasvariance1.png" alt="drawing" width="300"/>
-
+<p align="center">
+<img src="media/biasvariance1.png" alt="drawing" width="400"/>
+</p>
 What in general happens to the prediction error
+<p align="center">
+<img src="media/predictionerror.png" alt="drawing" width="400"/>
+</p>
 
-<img src="media/predictionerror.png" alt="drawing" width="300"/>
 
 # Regression
 
@@ -92,7 +96,7 @@ What in general happens to the prediction error
 3. Test all other data against the model. Points which fit the model well according to some loss function are considered to be part of the consensus set
 4. The model is reasonably good if sufficiently many points have been classified as part of the consensus set
 
-<img src="media/ransac.gif" alt="drawing" width="400"/>
+<img src="media/ransac.gif" alt="drawing" width="450"/>
 
 ## Nearest Neighbor Regression
 
@@ -116,8 +120,9 @@ K-means is an unsupervised algorithm which is used to identify clusters in data.
 
 Repeat steps 3-5
 
-
-<img src="media/kmeans.gif" alt="drawing" width="250">
+<p align="center">
+<img src="media/kmeans.gif" alt="drawing" width="350">
+</p>
 
 ## Expectation maximization
 Expectation maximization (EM) is an iterative method used to find *maximum likelihood* (ML) or *maximum a posteriori* (MAP) estimates of parameters in statistical models, where the model depends on unobserved latent variables.
@@ -127,7 +132,9 @@ The first mode attempts to estimate the missing or latent variables, called the 
 * E-Step: Create a function for the expectation of the log-likelihood evaluted using the current estimate for the parameters
 * M-Step: Compute parameters that maximize the expected log-likelihood found on the E-step. These parameter estimates are then used to determine the distribution of the latent variables in the next E-step.
 
-<img src="media/em.gif" alt="drawing" width="250">
+<p align="center">
+<img src="media/em.gif" alt="drawing" width="300">
+</p>
 
 # Artificial Neural Networks
 
@@ -141,7 +148,9 @@ The perceptron consists of
 3. A threshold in the form of an Activation Function. (Maps the input to desired values such as {0,1})
 4. An output layer
 
-<img src="media/perceptron.png" alt="drawing" width="400">
+<p align="center">
+<img src="media/perceptron.png" alt="drawing" width="450">
+</p>
 
 The network is trained by adjusting the weights and bias each node. Adjustments are made based on the error produced.
 
@@ -150,7 +159,9 @@ A perceptron is a single layer neural network and a multi-layer perceptron is ca
 ## Backpropagation
 Short for backward propagation of errors, is an algorithm for supervised learning of artificial neural networks using gradient descent.
 
-<img src="media/neuralnet.gif" alt="drawing" width="300">
+<p align="center">
+<img src="media/neuralnet.gif" alt="drawing" width="350">
+</p>
 
 Since we cannot simply train neurons in a network as the desired output is unknown for neurons in the middle layers, we'll use Backpropagation.
 Given an error function, the method calculates the gradient of the error function with respect to the neural network's weights. The calculation then proceeds backwards through the network
@@ -183,7 +194,9 @@ Dropout is regularization method for reducing overfitting in neural networks by 
 
 > During training, some number of layer outputs are randomly ignored or "dropped out". This has the effect of making the layer look like and be treated like a layer with a different number of nodes and connectivity to the prior layer. In effect, each update to a layer during training is performed with a different "view" of the configured layer.
 
+<p align="center">
 <img src="media/dropout.gif" alt="drawing" width="300">
+</p>
 
 # Support Vector Machines
 To be added
@@ -214,11 +227,15 @@ The main idea of boosting is to sequentially add new models to the ensemble. For
 * <img src="/summary/tex/1a49c503284de8a1bd43aa7b8f43ed4e.svg?invert_in_darkmode&sanitize=true" align=middle width=89.15552084999999pt height=22.831056599999986pt/> / <img src="/summary/tex/315c48aa4f8b1a16692ebd9d4bf39a22.svg?invert_in_darkmode&sanitize=true" align=middle width=109.88846714999998pt height=22.465723500000017pt/> weight for point that gets <img src="/summary/tex/cb3787c4eeef143956888cdc2dc87727.svg?invert_in_darkmode&sanitize=true" align=middle width=89.90707769999999pt height=22.831056599999986pt/> / <img src="/summary/tex/86c8c43796c5c675428f5e04c4e4e800.svg?invert_in_darkmode&sanitize=true" align=middle width=112.69863825pt height=22.831056599999986pt/> classified 
 * Calculate reliability coefficient <img src="/summary/tex/936a000b0d1e4428296f6e62501589d2.svg?invert_in_darkmode&sanitize=true" align=middle width=15.542290499999991pt height=26.085962100000025pt/> for classifier <img src="/summary/tex/b96b0f3c840c06f908af6ea2bcd501db.svg?invert_in_darkmode&sanitize=true" align=middle width=14.436907649999991pt height=26.085962100000025pt/> based on the error
 
-<img src="media/boosting_idea.png" alt="drawing" width="300">
+<p align="center">
+<img src="media/boosting_idea.png" alt="drawing" width="350">
+</p>
 
 Example of the convergence when boosting weak classifiers
 
-<img src="media/boosting.gif" alt="drawing" width="300">
+<p align="center">
+<img src="media/boosting.gif" alt="drawing" width="400">
+</p>
 
 ## Bagging
 
@@ -228,11 +245,15 @@ The idea is to form multiple training (bootstrap) samples <img src="/summary/tex
 
 Then a model can be trained for each bootstrap sample to generate an ensemble of models. 
 
-<img src="media/bagging.png" alt="drawing" width="300">
+<p align="center">
+<img src="media/bagging.png" alt="drawing" width="400">
+</p>
 
 Each model can then be combined to form the bagged classifier
 
-<img src="media/baggedclassifier.png" alt="drawing" width="300">
+<p align="center">
+<img src="media/baggedclassifier.png" alt="drawing" width="400">
+</p>
 
 Bagging is a procedure to reduce the variance of our classifier. It is a powerful tool to control overfitting of the model. 
 
@@ -276,16 +297,19 @@ Samples from the same class are similar to each other and should therefore be lo
 
 The projection length is used as a similiarity measurement and is given by,
 
-<img src="/summary/tex/7049aeed13b3851ba679df8da3260b52.svg?invert_in_darkmode&sanitize=true" align=middle width=108.81696044999998pt height=26.76175259999998pt/>
+<p align="center"><img src="/summary/tex/d3d4840a135064d052c1d20db7451b30.svg?invert_in_darkmode&sanitize=true" align=middle width=107.61127409999999pt height=45.67365495pt/></p>
 
-<img src="media/subspace.png" alt="drawing" width="250">
+<p align="center">
+<img src="media/subspace.png" alt="drawing" width="300">
+</p>
 
 ## Fisher's Method
 
 >The idea is to find the subspace (dimension) that is best suited to classification.
 
-<img src="media/fishers.png" alt="drawing" width="300">
-
+<p align="center">
+<img src="media/fishers.png" alt="drawing" width="350">
+</p>
 
 **Fisher's Criterion** is defined as,
 
