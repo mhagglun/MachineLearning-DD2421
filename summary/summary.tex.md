@@ -98,7 +98,7 @@ What in general happens to the prediction error
 
 <img src="media/ransac.gif" alt="drawing" width="450"/>
 
-## Nearest Neighbor Regression
+<!-- ## Nearest Neighbor Regression -->
 
 
 <!-- # Probabilistic Reasoning
@@ -224,8 +224,9 @@ The main idea of boosting is to sequentially add new models to the ensemble. For
 * Performance of classifiers $h_1, \ldots,h_t$ helps define $h_{t+1}$
 * Maintain weights $w^{t}_{i}$ for each training sample $(\bar{x}_{i}, y_{i})$
 * Large weights $w^{t}_{i}$ imply that $\bar{x}_{i}$ has greater influence on
-* $\textcolor{red}{Increase}$ / $\textcolor{green}{Decrease}$ weight for point that gets $\textcolor{red}{Wrongly}$ / $\textcolor{green}{Correctly}$ classified 
+* **Increase** / *Decrease* weight for point that gets **Wrongly** / *Correctly* classified 
 * Calculate reliability coefficient $\alpha^{t}$ for classifier $h^{t}$ based on the error
+
 
 <p align="center">
 <img src="media/boosting_idea.png" alt="drawing" width="350">
