@@ -5,7 +5,7 @@
 ### Shannon Entropy
 It is defined as,
 
-$H = - \sum_{i} p_{i} log_{b}p_{i}$
+$$H = - \sum_{i} p_{i} log_{b}p_{i}$$
 
 Example:
 Consider a single toss of skewed coin (it is likely to show one side more than the other side). Regarding the uncertainty of the outcome {head, tail}.
@@ -22,7 +22,7 @@ To be added.
 
 The k-NN algorithm assumes that similar things exist in close proximity to each other.
 
-When classifying a point $x$:
+When classifying a point $x$
 
 1. Select the number of neighbors k
 2. For each sample in the data set
@@ -33,8 +33,9 @@ When classifying a point $x$:
 5. Get labels of the selected k entries
 6. Majority vote classifies the query point $x$
 
-<img src="media/knn.gif" alt="drawing" width="300"/>
-
+<p align="center">
+<img src="media/knn.gif" alt="drawing" width="300" />
+</p>
 Pros:
 
 * Simple method, only need to specify k
@@ -71,16 +72,19 @@ This exponential growth in data causes high sparsity in the data set and unneces
 ## The Bias-Variance Tradeoff
 
 Intuitive explanation of bias and variance
-
-<img src="media/biasvariance2.png" alt="drawing" width="300"/>
-
+<p align="center">
+<img src="media/biasvariance2.png" alt="drawing" width="400"/>
+</p>
 The trade off visualized
 
-<img src="media/biasvariance1.png" alt="drawing" width="300"/>
-
+<p align="center">
+<img src="media/biasvariance1.png" alt="drawing" width="400"/>
+</p>
 What in general happens to the prediction error
+<p align="center">
+<img src="media/predictionerror.png" alt="drawing" width="400"/>
+</p>
 
-<img src="media/predictionerror.png" alt="drawing" width="300"/>
 
 # Regression
 
@@ -92,7 +96,7 @@ What in general happens to the prediction error
 3. Test all other data against the model. Points which fit the model well according to some loss function are considered to be part of the consensus set
 4. The model is reasonably good if sufficiently many points have been classified as part of the consensus set
 
-<img src="media/ransac.gif" alt="drawing" width="400"/>
+<img src="media/ransac.gif" alt="drawing" width="450"/>
 
 ## Nearest Neighbor Regression
 
@@ -116,8 +120,9 @@ K-means is an unsupervised algorithm which is used to identify clusters in data.
 
 Repeat steps 3-5
 
-
-<img src="media/kmeans.gif" alt="drawing" width="250">
+<p align="center">
+<img src="media/kmeans.gif" alt="drawing" width="350">
+</p>
 
 ## Expectation maximization
 Expectation maximization (EM) is an iterative method used to find *maximum likelihood* (ML) or *maximum a posteriori* (MAP) estimates of parameters in statistical models, where the model depends on unobserved latent variables.
@@ -127,7 +132,9 @@ The first mode attempts to estimate the missing or latent variables, called the 
 * E-Step: Create a function for the expectation of the log-likelihood evaluted using the current estimate for the parameters
 * M-Step: Compute parameters that maximize the expected log-likelihood found on the E-step. These parameter estimates are then used to determine the distribution of the latent variables in the next E-step.
 
-<img src="media/em.gif" alt="drawing" width="250">
+<p align="center">
+<img src="media/em.gif" alt="drawing" width="300">
+</p>
 
 # Artificial Neural Networks
 
@@ -141,7 +148,9 @@ The perceptron consists of
 3. A threshold in the form of an Activation Function. (Maps the input to desired values such as {0,1})
 4. An output layer
 
-<img src="media/perceptron.png" alt="drawing" width="400">
+<p align="center">
+<img src="media/perceptron.png" alt="drawing" width="450">
+</p>
 
 The network is trained by adjusting the weights and bias each node. Adjustments are made based on the error produced.
 
@@ -150,7 +159,9 @@ A perceptron is a single layer neural network and a multi-layer perceptron is ca
 ## Backpropagation
 Short for backward propagation of errors, is an algorithm for supervised learning of artificial neural networks using gradient descent.
 
-<img src="media/neuralnet.gif" alt="drawing" width="300">
+<p align="center">
+<img src="media/neuralnet.gif" alt="drawing" width="350">
+</p>
 
 Since we cannot simply train neurons in a network as the desired output is unknown for neurons in the middle layers, we'll use Backpropagation.
 Given an error function, the method calculates the gradient of the error function with respect to the neural network's weights. The calculation then proceeds backwards through the network
@@ -183,7 +194,9 @@ Dropout is regularization method for reducing overfitting in neural networks by 
 
 > During training, some number of layer outputs are randomly ignored or "dropped out". This has the effect of making the layer look like and be treated like a layer with a different number of nodes and connectivity to the prior layer. In effect, each update to a layer during training is performed with a different "view" of the configured layer.
 
+<p align="center">
 <img src="media/dropout.gif" alt="drawing" width="300">
+</p>
 
 # Support Vector Machines
 To be added
@@ -214,11 +227,15 @@ The main idea of boosting is to sequentially add new models to the ensemble. For
 * $\textcolor{red}{Increase}$ / $\textcolor{green}{Decrease}$ weight for point that gets $\textcolor{red}{Wrongly}$ / $\textcolor{green}{Correctly}$ classified 
 * Calculate reliability coefficient $\alpha^{t}$ for classifier $h^{t}$ based on the error
 
-<img src="media/boosting_idea.png" alt="drawing" width="300">
+<p align="center">
+<img src="media/boosting_idea.png" alt="drawing" width="350">
+</p>
 
 Example of the convergence when boosting weak classifiers
 
-<img src="media/boosting.gif" alt="drawing" width="300">
+<p align="center">
+<img src="media/boosting.gif" alt="drawing" width="400">
+</p>
 
 ## Bagging
 
@@ -228,11 +245,15 @@ The idea is to form multiple training (bootstrap) samples $S_i$ from the origina
 
 Then a model can be trained for each bootstrap sample to generate an ensemble of models. 
 
-<img src="media/bagging.png" alt="drawing" width="300">
+<p align="center">
+<img src="media/bagging.png" alt="drawing" width="400">
+</p>
 
 Each model can then be combined to form the bagged classifier
 
-<img src="media/baggedclassifier.png" alt="drawing" width="300">
+<p align="center">
+<img src="media/baggedclassifier.png" alt="drawing" width="400">
+</p>
 
 Bagging is a procedure to reduce the variance of our classifier. It is a powerful tool to control overfitting of the model. 
 
@@ -276,16 +297,19 @@ Samples from the same class are similar to each other and should therefore be lo
 
 The projection length is used as a similiarity measurement and is given by,
 
-$S = \sum^{p}_{i} (x,u_{i})^{2}$
+$$S = \sum^{p}_{i} (x,u_{i})^{2}$$
 
-<img src="media/subspace.png" alt="drawing" width="250">
+<p align="center">
+<img src="media/subspace.png" alt="drawing" width="300">
+</p>
 
 ## Fisher's Method
 
 >The idea is to find the subspace (dimension) that is best suited to classification.
 
-<img src="media/fishers.png" alt="drawing" width="300">
-
+<p align="center">
+<img src="media/fishers.png" alt="drawing" width="350">
+</p>
 
 **Fisher's Criterion** is defined as,
 
