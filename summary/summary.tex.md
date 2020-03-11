@@ -190,10 +190,34 @@ Bagging is a procedure to reduce the variance of our classifier. It is a powerfu
 
 
 # Dimensionality Reduction
+The general idea is to reduce effective the number of variables, considering only the components with larger variance. There are typically two different approaches to this
+
+1. Feature Selection
+   > Try to find a subset of the input data to work with.
+2. Feature Extraction / Projection
+   > Transform the data from high dimensionality space to a space with lower dimensions.
+   
+
+### Feature Selection
+Three strategies to work with here: **Filter strategy** (e.g. information gain), **wrapper strategy** (e.g. search guided by accuracy) and **embedded strategy** (regularization methods, e.g. LASSO).
 
 ### Principal Component Analysis
+Performs a linear mapping of the data to a lower dimensional space in such a way that the variance in the low-dimensional representation is maximized.
 
-### Concept of subspace and subspace methods
+This is done by constructing the covariance matrix of the data and then computing the eigendecomposition. The eigenvectors that correspond to the largest eigenvalues (the principal components) are then used to reconstruct a large fraction of the variance of the original data.
+
+### Subspace methods
+
+The concept of subspace: A subspace L is a set of linearly independent vectors that span a space which is a subset of a larger space. The general idea is to exploit the localization of the pattern distribution.
+
+Samples from the same class are similar to each other and should therefore be localized in a subspace spanned by a set of basis vectors $u_i$.
+
+The projection length is used as a similiarity measurement and is given by,
+
+$S = \sum^{p}_{i} (x,u_{i})^{2}$
+
+
+
 
 ### Similarity Measures
 
