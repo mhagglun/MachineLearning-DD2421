@@ -15,8 +15,6 @@ Thus the correct answer is that,
 
 **The entropy is smaller than one bit**
 
-# Decision Trees
-To be added.
 
 # k-Nearest Neighbors
 
@@ -97,15 +95,6 @@ What in general happens to the prediction error
 4. The model is reasonably good if sufficiently many points have been classified as part of the consensus set
 
 <img src="media/ransac.gif" alt="drawing" width="450"/>
-
-<!-- ## Nearest Neighbor Regression -->
-
-
-<!-- # Probabilistic Reasoning
-To be added. -->
-
-<!-- # Learning as Inference -->
-<!-- To be added. -->
 
 # Priors and Latent Variables
 ## K-means
@@ -197,9 +186,6 @@ Dropout is regularization method for reducing overfitting in neural networks by 
 <p align="center">
 <img src="media/dropout.gif" alt="drawing" width="300">
 </p>
-
-# Support Vector Machines
-To be added
 
 # Ensemble Methods
 
@@ -328,4 +314,4 @@ Where <img src="/summary/tex/fd8be73b54f5436a5cd2e73ba9b6bfa9.svg?invert_in_dark
 
 Therefore, <img src="/summary/tex/4e5bf6cb2265dea9689d1bdd192c8b39.svg?invert_in_darkmode&sanitize=true" align=middle width=124.63109009999998pt height=24.65753399999998pt/>
 
- The eigenvector corresponding to the largest eigenvalue of <img src="/summary/tex/aeeff88599f2cfaa3e7d4cbdcfa847dc.svg?invert_in_darkmode&sanitize=true" align=middle width=49.24840634999998pt height=28.894955100000008pt/> gives A that maximizes Fisher's Criterion
+The eigenvector corresponding to the largest eigenvalue of <img src="/summary/tex/aeeff88599f2cfaa3e7d4cbdcfa847dc.svg?invert_in_darkmode&sanitize=true" align=middle width=49.24840634999998pt height=28.894955100000008pt/> gives A that maximizes Fisher's Criterion
