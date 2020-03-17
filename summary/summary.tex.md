@@ -15,8 +15,6 @@ Thus the correct answer is that,
 
 **The entropy is smaller than one bit**
 
-# Decision Trees
-To be added.
 
 # k-Nearest Neighbors
 
@@ -97,15 +95,6 @@ What in general happens to the prediction error
 4. The model is reasonably good if sufficiently many points have been classified as part of the consensus set
 
 <img src="media/ransac.gif" alt="drawing" width="450"/>
-
-<!-- ## Nearest Neighbor Regression -->
-
-
-<!-- # Probabilistic Reasoning
-To be added. -->
-
-<!-- # Learning as Inference -->
-<!-- To be added. -->
 
 # Priors and Latent Variables
 ## K-means
@@ -197,9 +186,6 @@ Dropout is regularization method for reducing overfitting in neural networks by 
 <p align="center">
 <img src="media/dropout.gif" alt="drawing" width="300">
 </p>
-
-# Support Vector Machines
-To be added
 
 # Ensemble Methods
 
@@ -328,4 +314,4 @@ $$S^{-1}_{W}S_{B}a = \lambda a$$
 
 Therefore, $max\{J_{s}(a)\} = \lambda_{1}$
 
- The eigenvector corresponding to the largest eigenvalue of $S^{-1}_{W}S_{B}$ gives A that maximizes Fisher's Criterion
+The eigenvector corresponding to the largest eigenvalue of $S^{-1}_{W}S_{B}$ gives A that maximizes Fisher's Criterion
