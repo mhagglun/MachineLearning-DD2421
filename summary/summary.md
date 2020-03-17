@@ -98,7 +98,7 @@ What in general happens to the prediction error
 
 <img src="media/ransac.gif" alt="drawing" width="450"/>
 
-## Nearest Neighbor Regression
+<!-- ## Nearest Neighbor Regression -->
 
 
 <!-- # Probabilistic Reasoning
@@ -224,8 +224,9 @@ The main idea of boosting is to sequentially add new models to the ensemble. For
 * Performance of classifiers <img src="/summary/tex/d590a94c9587fa932f88e32c6ab31eb4.svg?invert_in_darkmode&sanitize=true" align=middle width=67.81189635pt height=22.831056599999986pt/> helps define <img src="/summary/tex/b1c1141803ca2250b3d9577374e07178.svg?invert_in_darkmode&sanitize=true" align=middle width=31.08082724999999pt height=22.831056599999986pt/>
 * Maintain weights <img src="/summary/tex/fb67a66168c055547f98c88d4528002b.svg?invert_in_darkmode&sanitize=true" align=middle width=17.17663859999999pt height=26.085962100000025pt/> for each training sample <img src="/summary/tex/7ece59a2386a50d8d18381470498281f.svg?invert_in_darkmode&sanitize=true" align=middle width=48.49130714999999pt height=24.65753399999998pt/>
 * Large weights <img src="/summary/tex/fb67a66168c055547f98c88d4528002b.svg?invert_in_darkmode&sanitize=true" align=middle width=17.17663859999999pt height=26.085962100000025pt/> imply that <img src="/summary/tex/761879c521ce90fc5ebc2cfeb7d684f0.svg?invert_in_darkmode&sanitize=true" align=middle width=14.045887349999989pt height=18.666631500000015pt/> has greater influence on
-* <img src="/summary/tex/1a49c503284de8a1bd43aa7b8f43ed4e.svg?invert_in_darkmode&sanitize=true" align=middle width=89.15552084999999pt height=22.831056599999986pt/> / <img src="/summary/tex/315c48aa4f8b1a16692ebd9d4bf39a22.svg?invert_in_darkmode&sanitize=true" align=middle width=109.88846714999998pt height=22.465723500000017pt/> weight for point that gets <img src="/summary/tex/cb3787c4eeef143956888cdc2dc87727.svg?invert_in_darkmode&sanitize=true" align=middle width=89.90707769999999pt height=22.831056599999986pt/> / <img src="/summary/tex/86c8c43796c5c675428f5e04c4e4e800.svg?invert_in_darkmode&sanitize=true" align=middle width=112.69863825pt height=22.831056599999986pt/> classified 
+* **Increase** / *Decrease* weight for point that gets **Wrongly** / *Correctly* classified 
 * Calculate reliability coefficient <img src="/summary/tex/936a000b0d1e4428296f6e62501589d2.svg?invert_in_darkmode&sanitize=true" align=middle width=15.542290499999991pt height=26.085962100000025pt/> for classifier <img src="/summary/tex/b96b0f3c840c06f908af6ea2bcd501db.svg?invert_in_darkmode&sanitize=true" align=middle width=14.436907649999991pt height=26.085962100000025pt/> based on the error
+
 
 <p align="center">
 <img src="media/boosting_idea.png" alt="drawing" width="350">
